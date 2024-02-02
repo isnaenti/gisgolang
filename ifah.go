@@ -299,7 +299,7 @@ func HapusUser(publickey, mongoenv, dbname, collname string, r *http.Request) st
 
 // ---------------------------------------------------------------------- Geojson ----------------------------------------------------------------------
 
-func MembuatGeojsonPoint(publickey, mongoenv, dbname, collname string, r *http.Request) string {
+func MembuatGeojsonPoint(mongoenv, dbname, collname string, r *http.Request) string {
 	var response Pesan
 	response.Status = false
 	mconn := SetConnection(mongoenv, dbname)
@@ -311,32 +311,6 @@ func MembuatGeojsonPoint(publickey, mongoenv, dbname, collname string, r *http.R
 		return ReturnStruct(response)
 	}
 
-	header := r.Header.Get("token")
-	if header == "" {
-		response.Message = "Header login tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	tokenusername := DecodeGetUsername(os.Getenv(publickey), header)
-	tokenrole := DecodeGetRole(os.Getenv(publickey), header)
-
-	if tokenusername == "" || tokenrole == "" {
-		response.Message = "Hasil decode tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if !UsernameExists(mconn, collname, User{Username: tokenusername}) {
-		response.Message = "Akun tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if tokenrole != "owner" {
-		if tokenrole != "dosen" {
-			response.Message = "Anda tidak memiliki akses"
-			return ReturnStruct(response)
-		}
-	}
-
 	PostPoint(mconn, collname, geojsonpoint)
 	response.Status = true
 	response.Message = "Data point berhasil masuk"
@@ -344,7 +318,7 @@ func MembuatGeojsonPoint(publickey, mongoenv, dbname, collname string, r *http.R
 	return ReturnStruct(response)
 }
 
-func MembuatGeojsonPolyline(publickey, mongoenv, dbname, collname string, r *http.Request) string {
+func MembuatGeojsonPolyline(mongoenv, dbname, collname string, r *http.Request) string {
 	var response Pesan
 	response.Status = false
 	mconn := SetConnection(mongoenv, dbname)
@@ -356,32 +330,6 @@ func MembuatGeojsonPolyline(publickey, mongoenv, dbname, collname string, r *htt
 		return ReturnStruct(response)
 	}
 
-	header := r.Header.Get("token")
-	if header == "" {
-		response.Message = "Header login tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	tokenusername := DecodeGetUsername(os.Getenv(publickey), header)
-	tokenrole := DecodeGetRole(os.Getenv(publickey), header)
-
-	if tokenusername == "" || tokenrole == "" {
-		response.Message = "Hasil decode tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if !UsernameExists(mconn, collname, User{Username: tokenusername}) {
-		response.Message = "Akun tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if tokenrole != "owner" {
-		if tokenrole != "dosen" {
-			response.Message = "Anda tidak memiliki akses"
-			return ReturnStruct(response)
-		}
-	}
-
 	PostLinestring(mconn, collname, geojsonpolyline)
 	response.Status = true
 	response.Message = "Data polyline berhasil masuk"
@@ -389,7 +337,7 @@ func MembuatGeojsonPolyline(publickey, mongoenv, dbname, collname string, r *htt
 	return ReturnStruct(response)
 }
 
-func MembuatGeojsonPolygon(publickey, mongoenv, dbname, collname string, r *http.Request) string {
+func MembuatGeojsonPolygon(mongoenv, dbname, collname string, r *http.Request) string {
 	var response Pesan
 	response.Status = false
 	mconn := SetConnection(mongoenv, dbname)
@@ -399,32 +347,6 @@ func MembuatGeojsonPolygon(publickey, mongoenv, dbname, collname string, r *http
 	if err != nil {
 		response.Message = "Error parsing application/json: " + err.Error()
 		return ReturnStruct(response)
-	}
-
-	header := r.Header.Get("token")
-	if header == "" {
-		response.Message = "Header login tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	tokenusername := DecodeGetUsername(os.Getenv(publickey), header)
-	tokenrole := DecodeGetRole(os.Getenv(publickey), header)
-
-	if tokenusername == "" || tokenrole == "" {
-		response.Message = "Hasil decode tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if !UsernameExists(mconn, collname, User{Username: tokenusername}) {
-		response.Message = "Akun tidak ditemukan"
-		return ReturnStruct(response)
-	}
-
-	if tokenrole != "owner" {
-		if tokenrole != "dosen" {
-			response.Message = "Anda tidak memiliki akses"
-			return ReturnStruct(response)
-		}
 	}
 
 	PostPolygon(mconn, collname, geojsonpolygon)
