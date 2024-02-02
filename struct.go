@@ -105,7 +105,7 @@ type Yaggs struct {
 	Max         int64     `json:"max,omitempty" bson:"max,omitempty"`
 	Min         int64     `json:"min,omitempty" bson:"min,omitempty"`
 	Radius      int64     `json:"radius,omitempty" bson:"radius,omitempty"`
-	Type        int64     `json:"type,omitempty" bson:"type,omitempty"`
+	Type        string    `json:"type,omitempty" bson:"type,omitempty"`
 }
 
 type Polyline struct {
