@@ -1,4 +1,4 @@
-package yaya
+package ifah
 
 import "golang.org/x/crypto/bcrypt"
 
