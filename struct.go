@@ -101,11 +101,11 @@ type Point struct {
 	Radius      int64     `json:"radius,omitempty" bson:"radius,omitempty"`
 }
 type Yaggs struct {
-	Coordinates []float64 `json:"coordinates" bson:"coordinates"`
-	Max         int64     `json:"max,omitempty" bson:"max,omitempty"`
-	Min         int64     `json:"min,omitempty" bson:"min,omitempty"`
-	Radius      int64     `json:"radius,omitempty" bson:"radius,omitempty"`
-	Type        string    `json:"type,omitempty" bson:"type,omitempty"`
+	Coordinates interface{} `json:"coordinates" bson:"coordinates"`
+	Max         int64       `json:"max,omitempty" bson:"max,omitempty"`
+	Min         int64       `json:"min,omitempty" bson:"min,omitempty"`
+	Radius      int64       `json:"radius,omitempty" bson:"radius,omitempty"`
+	Type        string      `json:"type,omitempty" bson:"type,omitempty"`
 }
 
 type Polyline struct {
